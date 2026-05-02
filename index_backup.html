@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HEEJIN'S PORTFOLIO</title> 
+
+   Spline Viewer
+  <script type="module" src="https://unpkg.com/@splinetool/viewer@1.0.91/build/spline-viewer.js"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8fafc;
+      color: #111827;
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 50;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 48px;
+      background: rgba(255,255,255,0.75);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+
+    nav .logo {
+      font-size: 18px;
+      font-weight: 900;
+      color: #2563eb;
+    }
+
+    nav .menu {
+      display: flex;
+      gap: 32px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #111827;
+    }
+
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 720px;
+      overflow: hidden;
+      background: #050505;
+    }
+
+    .spline-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background: radial-gradient(circle, rgba(255,255,255,0.02), rgba(0,0,0,0.45));
+      pointer-events: none;
+    }
+
+    .hero-text {
+      position: relative;
+      z-index: 3;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+      pointer-events: none;
+      padding: 0 24px;
+    }
+
+    .hero-text .tag {
+      margin-bottom: 24px;
+      padding: 8px 18px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.9);
+      color: #2563eb;
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+    }
+
+    .hero-text h1 {
+      font-size: clamp(64px, 11vw, 160px);
+      line-height: 0.92;
+      letter-spacing: -0.08em;
+      font-weight: 900;
+    }
+
+    .hero-text p {
+      margin-top: 28px;
+      max-width: 720px;
+      font-size: 20px;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.68);
+      word-break: keep-all;
+    }
+
+    section {
+      padding: 140px 48px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      color: #2563eb;
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      margin-bottom: 16px;
+    }
+
+    h2 {
+      font-size: 48px;
+      line-height: 1.25;
+      letter-spacing: -0.04em;
+      margin-bottom: 32px;
+    }
+
+    .about-text {
+      font-size: 20px;
+      line-height: 1.8;
+      color: #475569;
+      max-width: 760px;
+      word-break: keep-all;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 28px;
+      padding: 36px;
+      min-height: 220px;
+      box-shadow: 0 20px 60px rgba(15,23,42,0.04);
+    }
+
+    .card h3 {
+      font-size: 24px;
+      margin-bottom: 12px;
+    }
+
+    .card p {
+      color: #64748b;
+      line-height: 1.7;
+      word-break: keep-all;
+    }
+
+    .project-list {
+      display: grid;
+      gap: 28px;
+      margin-top: 48px;
+    }
+
+    .project {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+      background: white;
+      border-radius: 36px;
+      padding: 36px;
+      border: 1px solid #e5e7eb;
+    }
+
+    .thumb {
+      height: 280px;
+      border-radius: 28px;
+      background: linear-gradient(135deg, #dbeafe, #eff6ff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #93c5fd;
+      font-size: 48px;
+      font-weight: 900;
+    }
+
+    .project h3 {
+      font-size: 32px;
+      margin-bottom: 16px;
+    }
+
+    .project p {
+      color: #64748b;
+      line-height: 1.8;
+      word-break: keep-all;
+    }
+
+    footer {
+      padding: 120px 48px;
+      text-align: center;
+      background: white;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    footer h2 {
+      margin-bottom: 24px;
+    }
+
+    footer a {
+      color: #2563eb;
+      font-size: 32px;
+      font-weight: 900;
+      text-decoration: underline;
+      text-underline-offset: 8px;
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        padding: 20px;
+      }
+
+      nav .menu {
+        display: none;
+      }
+
+      .hero-text h1 {
+        font-size: 64px;
+      }
+
+      .hero-text p {
+        font-size: 16px;
+      }
+
+      section {
+        padding: 96px 24px;
+      }
+
+      h2 {
+        font-size: 36px;
+      }
+
+      .cards,
+      .project {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <nav>
+    <div class="logo">HEEJIN'S PORTFOLIO</div>
+    <div class="menu">
+      <a href="#about">ABOUT</a>
+      <a href="#contents">CONTENTS</a>
+      <a href="#projects">PROJECTS</a>
+      <a href="#contact">CONTACT</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <spline-viewer
+      class="spline-bg"
+      url="https://prod.spline.design/qxl5MaxP-IEKqS8h/scene.splinecode">
+    </spline-viewer>
+
+    <div class="hero-text">
+      <div class="tag">UX/UI DESIGNER</div>
+      <h1>HEEJIN'S<br />PORTFOLIO</h1>
+      <p>
+        문제를 구조화하고, 사용자가 편하게 흐르도록 설계하는
+        UX/UI 디자이너 희진입니다.
+      </p>
+    </div>
+  </header>
+
+  <section id="about">
+    <div class="section-label">ABOUT</div>
+    <h2>복잡한 문제를 쉽게 읽히는 흐름으로 바꿉니다.</h2>
+    <p class="about-text">
+      사용자 경험의 시작은 예쁜 화면이 아니라 문제를 정확히 정의하는 것이라고 생각합니다.
+      저는 문제 정의, 사용자 흐름 설계, 빠른 시각화를 바탕으로 사용자가 자연스럽게 이해하고
+      행동할 수 있는 화면을 만듭니다.
+    </p>
+  </section>
+
+  <section id="contents">
+    <div class="section-label">CONTENTS</div>
+    <h2>Portfolio Contents</h2>
+
+    <div class="cards">
+      <div class="card">
+        <h3>UX/UI App</h3>
+        <p>앱 서비스의 문제 정의, 사용자 흐름, 와이어프레임, UI 설계 과정을 보여줍니다.</p>
+      </div>
+      <div class="card">
+        <h3>Web Design</h3>
+        <p>브랜드와 목적에 맞는 웹 구조, 히어로, 섹션 구성, 반응형 화면을 설계합니다.</p>
+      </div>
+      <div class="card">
+        <h3>Branding</h3>
+        <p>서비스의 톤앤매너, 로고, 컬러, 그래픽 요소를 일관된 경험으로 정리합니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="section-label">PROJECTS</div>
+    <h2>Selected Projects</h2>
+
+    <div class="project-list">
+      <div class="project">
+        <div class="thumb">NoTalk</div>
+        <div>
+          <h3>NoTalk</h3>
+          <p>
+            대화 없이 함께하는 취미 공유 서비스입니다.
+            관계 피로를 줄이고, 조용한 동행 경험을 설계한 UX/UI 프로젝트입니다.
+          </p>
+        </div>
+      </div>
+
+      <div class="project">
+        <div class="thumb">WEB</div>
+        <div>
+          <h3>Portfolio Web</h3>
+          <p>
+            개인의 강점과 프로젝트 흐름을 명확히 보여주기 위한 포트폴리오 웹사이트입니다.
+          </p>
+        </div>
+      </div>
+
+      <div class="project">
+        <div class="thumb">Brand</div>
+        <div>
+          <h3>Branding / Graphic</h3>
+          <p>
+            서비스의 인상과 메시지를 시각적으로 전달하기 위한 그래픽 및 브랜딩 작업입니다.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <div class="section-label">CONTACT</div>
+    <h2>함께 새로운 경험을 만들어볼까요?</h2>
+    <a href="mailto:heejin@design.com">heejin@design.com</a>
+  </footer>
+</body>
+</html>

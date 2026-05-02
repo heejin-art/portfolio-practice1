@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>Heejin Portfolio</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      height: 100vh;
+      overflow: hidden;
+      cursor: none; /* 커서 숨김 (감성) */
+    }
+
+    /* 배경 */
+    .hero {
+    width: 100%;
+    height: 100vh;
+    background: url('./images/hero_3.png') no-repeat center;
+    background-size: cover;
+    }
+
+    /* key */
+    .key {
+    position: absolute;
+    width: 220px;
+    pointer-events: none;
+    z-index: 10;
+    transform: translate(-50%, -50%);
+    filter: drop-shadow(0 15px 30px rgba(0,0,0,0.4));
+    }
+
+    .keyhole {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    left: 50%;
+    top: 70%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    pointer-events: none;
+    }
+
+/* 흡착 시 반짝 효과 */
+.key.glow {
+  filter: drop-shadow(0 0 15px #fff)
+          drop-shadow(0 0 30px #8fd3ff)
+          drop-shadow(0 0 60px #8fd3ff);
+  transition: filter 0.2s;
+}
+
+  </style>
+</head>
+
+<body>
+  <div class="hero">
+    <img src="./images/key.png" class="key" id="key" />
+  </div>
+
+  <div class="hero">
+    <img src="./images/key.png" class="key" id="key">
+    <div class="keyhole" id="keyhole"></div>
+  </div>
+
+
+  <script>
+    const key = document.getElementById("key");
+
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+
+    let currentX = mouseX;
+    let currentY = mouseY;
+
+    // 마우스 위치 추적
+    window.addEventListener("mousemove", (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+
+    function animate() {
+      // 부드럽게 따라오게 (easing)
+      currentX += (mouseX - currentX) * 0.08;
+      currentY += (mouseY - currentY) * 0.08;
+
+      // 회전값 계산
+      const dx = mouseX - currentX;
+      const rotate = dx * 0.05;
+
+      key.style.transform = `
+        translate(${currentX}px, ${currentY}px)
+        rotate(${rotate}deg)
+      `;
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
+</body>
+</html>

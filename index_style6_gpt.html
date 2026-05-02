@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Heejin's Portfolio</title>
+
+<link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  overflow: hidden;
+  cursor: none;
+  font-family: 'UnifrakturCook', cursive;
+  background:
+    radial-gradient(circle at 18% 35%, rgba(255, 217, 194, 0.55), transparent 28%),
+    radial-gradient(circle at 75% 18%, rgba(170, 220, 255, 0.5), transparent 34%),
+    linear-gradient(135deg, #9fc7d0 0%, #7fb0c6 38%, #88a7c7 68%, #b9bfd0 100%);
+}
+
+/* sky texture */
+.sky {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+}
+
+.sky::before,
+.sky::after {
+  content: "";
+  position: absolute;
+  width: 90vw;
+  height: 36vh;
+  left: -10vw;
+  background: rgba(255,255,255,0.22);
+  filter: blur(28px);
+  border-radius: 50%;
+  transform: rotate(-8deg);
+}
+
+.sky::before {
+  top: 16vh;
+  background: linear-gradient(90deg, transparent, rgba(255,226,210,.42), rgba(255,255,255,.2), transparent);
+}
+
+.sky::after {
+  top: 50vh;
+  left: 20vw;
+  background: linear-gradient(90deg, transparent, rgba(208,235,255,.35), rgba(255,255,255,.16), transparent);
+}
+
+/* stars */
+.star {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: white;
+  box-shadow: 0 0 12px white, 0 0 25px rgba(255,255,255,.8);
+  transform: rotate(45deg);
+  animation: twinkle 2.4s infinite ease-in-out alternate;
+}
+
+.star::before,
+.star::after {
+  content: "";
+  position: absolute;
+  background: white;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.star::before {
+  width: 2px;
+  height: 42px;
+}
+
+.star::after {
+  width: 42px;
+  height: 2px;
+}
+
+.s1 { top: 18%; left: 22%; }
+.s2 { top: 26%; right: 25%; animation-delay: .5s; }
+.s3 { bottom: 28%; left: 31%; animation-delay: 1s; }
+.s4 { bottom: 18%; right: 22%; animation-delay: 1.4s; }
+
+@keyframes twinkle {
+  from { opacity: .35; transform: rotate(45deg) scale(.75); }
+  to { opacity: 1; transform: rotate(45deg) scale(1.2); }
+}
+
+/* title */
+.hero-title {
+  position: absolute;
+  top: 24%;
+  width: 100%;
+  text-align: center;
+  font-size: clamp(72px, 9vw, 160px);
+  line-height: .8;
+  letter-spacing: -3px;
+  color: transparent;
+  -webkit-text-stroke: 2px rgba(12, 32, 62, .92);
+  background:
+    linear-gradient(115deg,
+      #ffffff 0%,
+      #d8efff 18%,
+      #173b67 34%,
+      #ffffff 48%,
+      #0c2546 62%,
+      #a8d9ff 78%,
+      #ffffff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  filter: drop-shadow(0 10px 5px rgba(0,0,0,.18))
+          drop-shadow(0 0 8px rgba(255,255,255,.7));
+}
+
+.hero-title span {
+  display: block;
+  position: relative;
+}
+
+/* dripping */
+.hero-title span::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -28px;
+  width: 13px;
+  height: 62px;
+  border-radius: 50% 50% 60% 60%;
+  background: linear-gradient(90deg, #061a32, #dff5ff 38%, #0f2d52 70%, #ffffff);
+  box-shadow: inset -3px 0 6px rgba(255,255,255,.8), 0 8px 6px rgba(0,0,0,.16);
+}
+
+.hero-title span:nth-child(1)::after {
+  left: 51%;
+  height: 72px;
+}
+
+.hero-title span:nth-child(2)::after {
+  left: 47%;
+  height: 96px;
+}
+
+/* key hole */
+.keyhole-wrap {
+  position: absolute;
+  left: 50%;
+  top: 68%;
+  transform: translate(-50%, -50%);
+  width: 110px;
+  height: 150px;
+}
+
+.keyhole {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 64px;
+  height: 88px;
+  transform: translate(-50%, -50%);
+  border-radius: 50% 50% 45% 45%;
+  background:
+    radial-gradient(circle at 35% 25%, #333, #030303 55%, #000 100%);
+  box-shadow:
+    inset -8px -10px 20px rgba(255,255,255,.08),
+    inset 8px 8px 16px rgba(0,0,0,.8),
+    0 20px 40px rgba(0,0,0,.35),
+    0 0 35px rgba(255,255,255,.32);
+}
+
+.keyhole::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -38px;
+  width: 34px;
+  height: 56px;
+  transform: translateX(-50%);
+  background: #020202;
+  border-radius: 0 0 18px 18px;
+}
+
+/* mouse following key */
+.key {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  width: 150px;
+  height: 260px;
+  pointer-events: none;
+  z-index: 20;
+  transform: translate(-50%, -50%) rotate(-18deg);
+  filter: drop-shadow(0 22px 25px rgba(33,70,120,.28));
+  transition: transform .25s ease, filter .25s ease;
+}
+
+.key svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.key.locked {
+  transform: translate(-50%, -50%) rotate(90deg) scale(.62);
+  filter: drop-shadow(0 0 28px rgba(255,255,255,.9));
+}
+
+/* insert flash */
+.flash {
+  position: fixed;
+  inset: 0;
+  background: white;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 50;
+  transition: opacity .7s ease;
+}
+
+.flash.active {
+  opacity: 1;
+}
+
+/* small guide */
+.guide {
+  position: absolute;
+  left: 50%;
+  top: calc(68% + 105px);
+  transform: translateX(-50%);
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  letter-spacing: .08em;
+  color: rgba(255,255,255,.78);
+  text-shadow: 0 0 12px rgba(255,255,255,.8);
+}
+</style>
+</head>
+
+<body>
+
+<div class="sky">
+  <div class="star s1"></div>
+  <div class="star s2"></div>
+  <div class="star s3"></div>
+  <div class="star s4"></div>
+</div>
+
+<h1 class="hero-title">
+  <span>Heejin's</span>
+  <span>Portfolio</span>
+</h1>
+
+<div class="keyhole-wrap" id="keyholeWrap">
+  <div class="keyhole" id="keyhole"></div>
+</div>
+
+<div class="guide">MOVE THE KEY TO ENTER</div>
+
+<div class="key" id="key">
+  <svg viewBox="0 0 160 300" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="blueGlass" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="28%" stop-color="#dff4ff"/>
+        <stop offset="55%" stop-color="#8fc4ff"/>
+        <stop offset="78%" stop-color="#ffffff"/>
+        <stop offset="100%" stop-color="#7aa8ee"/>
+      </linearGradient>
+
+      <linearGradient id="metal" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="22%" stop-color="#c8eaff"/>
+        <stop offset="45%" stop-color="#6ca2e8"/>
+        <stop offset="65%" stop-color="#ffffff"/>
+        <stop offset="100%" stop-color="#83aeee"/>
+      </linearGradient>
+
+      <filter id="glow">
+        <feGaussianBlur stdDeviation="3" result="blur"/>
+        <feMerge>
+          <feMergeNode in="blur"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+    </defs>
+
+    <!-- cloud top -->
+    <path d="M78 26
+      C58 4 24 18 27 51
+      C4 57 0 95 32 104
+      C40 127 78 126 88 105
+      C116 112 145 92 131 63
+      C133 28 98 13 78 26Z"
+      fill="rgba(230,246,255,.46)"
+      stroke="url(#metal)"
+      stroke-width="10"
+      filter="url(#glow)"/>
+
+    <path d="M76 54
+      C66 41 45 48 46 65
+      C34 67 31 87 48 92
+      C53 105 74 104 80 92
+      C96 97 113 86 106 70
+      C108 50 88 43 76 54Z"
+      fill="rgba(255,255,255,.22)"
+      stroke="rgba(255,255,255,.75)"
+      stroke-width="3"/>
+
+    <!-- jewel -->
+    <path d="M79 86 L101 103 L93 130 L65 130 L57 103 Z"
+      fill="#19b7ff"
+      stroke="#bff4ff"
+      stroke-width="4"/>
+
+    <!-- stick -->
+    <rect x="72" y="128" width="18" height="118" rx="9"
+      fill="url(#metal)"
+      stroke="rgba(255,255,255,.8)"
+      stroke-width="2"/>
+
+    <ellipse cx="81" cy="154" rx="28" ry="14" fill="url(#metal)" />
+    <ellipse cx="81" cy="178" rx="24" ry="13" fill="url(#metal)" />
+
+    <!-- bottom key teeth -->
+    <path d="M80 244
+      C105 241 126 256 126 275
+      C126 291 111 298 96 291
+      L96 276
+      L79 276
+      L79 292
+      C58 294 43 283 45 266
+      C47 252 60 246 80 244Z"
+      fill="url(#metal)"
+      stroke="rgba(255,255,255,.85)"
+      stroke-width="3"/>
+
+    <rect x="68" y="258" width="28" height="28" rx="5"
+      fill="rgba(255,255,255,.25)"
+      stroke="rgba(255,255,255,.75)"
+      stroke-width="3"/>
+
+    <!-- sparkles -->
+    <path d="M124 28 L130 45 L147 51 L130 57 L124 74 L118 57 L101 51 L118 45 Z"
+      fill="white" opacity=".95"/>
+    <path d="M22 132 L26 143 L38 147 L26 151 L22 162 L18 151 L6 147 L18 143 Z"
+      fill="white" opacity=".8"/>
+  </svg>
+</div>
+
+<div class="flash" id="flash"></div>
+
+<script>
+const key = document.getElementById("key");
+const keyhole = document.getElementById("keyhole");
+const flash = document.getElementById("flash");
+
+let mouseX = window.innerWidth / 2;
+let mouseY = window.innerHeight / 2;
+let keyX = mouseX;
+let keyY = mouseY;
+let locked = false;
+
+window.addEventListener("mousemove", (e) => {
+  if (locked) return;
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+});
+
+function animateKey() {
+  keyX += (mouseX - keyX) * 0.14;
+  keyY += (mouseY - keyY) * 0.14;
+
+  key.style.left = keyX + "px";
+  key.style.top = keyY + "px";
+
+  if (!locked) checkKeyhole();
+
+  requestAnimationFrame(animateKey);
+}
+
+function checkKeyhole() {
+  const rect = keyhole.getBoundingClientRect();
+  const holeX = rect.left + rect.width / 2;
+  const holeY = rect.top + rect.height / 2;
+
+  const dist = Math.hypot(keyX - holeX, keyY - holeY);
+
+  if (dist < 82) {
+    locked = true;
+
+    key.style.left = holeX + "px";
+    key.style.top = holeY + "px";
+    key.classList.add("locked");
+
+    setTimeout(() => {
+      flash.classList.add("active");
+    }, 500);
+
+    setTimeout(() => {
+      window.location.href = "portfolio.html";
+    }, 1300);
+  }
+}
+
+animateKey();
+</script>
+
+</body>
+</html>
